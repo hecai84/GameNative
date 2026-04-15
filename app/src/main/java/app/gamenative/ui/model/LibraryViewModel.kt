@@ -166,6 +166,10 @@ class LibraryViewModel @Inject constructor(
 
         PluviaApp.events.on<AndroidEvent.LibraryInstallStatusChanged, Unit>(onInstallStatusChanged)
         PluviaApp.events.on<AndroidEvent.CustomGameImagesFetched, Unit>(onCustomGameImagesFetched)
+
+        // Initial filter to include custom games and other sources on startup
+        // This ensures custom games appear in the "ALL" tab immediately
+        onFilterApps(paginationCurrentPage)
     }
 
     override fun onCleared() {

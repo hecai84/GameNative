@@ -1251,13 +1251,7 @@ fun PluviaMain(
             val startDestination = rememberSaveable {
                 when {
                     SteamService.isLoggedIn -> PluviaScreen.Home.route + "?offline=false"
-                    // skip login screen if any service has stored credentials
-                    (PrefManager.username.isNotEmpty() && PrefManager.refreshToken.isNotEmpty()) ||
-                        GOGService.hasStoredCredentials(context) ||
-                        EpicService.hasStoredCredentials(context) ||
-                        AmazonService.hasStoredCredentials(context) ->
-                        PluviaScreen.Home.route + "?offline=true"
-                    else -> PluviaScreen.LoginUser.route
+                    else -> PluviaScreen.Home.route + "?offline=true"
                 }
             }
 
