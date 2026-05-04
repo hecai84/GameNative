@@ -35,6 +35,11 @@ android {
     // https://developer.android.com/ndk/downloads
     ndkVersion = "22.1.7171670"
 
+
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+
     signingConfigs {
         create("pluvia") {
             if (keystoreProperties != null) {
