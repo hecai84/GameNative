@@ -781,6 +781,7 @@ class SteamService : Service(), IChallengeUrlChanged {
             ownedDlc: Map<Int, DepotInfo>?,
             licensedDepotIds: Set<Int>? = null,
             hasSteamUnlockedBranch: Boolean = false,
+            dlcGroupsWithPreferredLanguage: Set<Int>? = null,
         ): Boolean {
             if (depot.manifests.isEmpty() && depot.encryptedManifests.isNotEmpty() && !hasSteamUnlockedBranch)
                 return false
@@ -808,8 +809,11 @@ class SteamService : Service(), IChallengeUrlChanged {
             if (depot.dlcAppId != INVALID_APP_ID && ownedDlc != null && !ownedDlc.containsKey(depot.depotId))
                 return false
             // 5. Language filter - if depot has language, it must match preferred language
-            if (depot.language.isNotEmpty() && depot.language != preferredLanguage)
-                return false
+            //    unless the DLC only exists for a tagged language that is not the preferred language
+            if (depot.language.isNotEmpty() && depot.language != preferredLanguage) {
+                val groupHasPreferred = dlcGroupsWithPreferredLanguage?.contains(depot.dlcAppId) ?: true
+                if (groupHasPreferred) return false
+            }
             // 6. Package grants this depot — prevents grabbing region depots the user has no license for.
             //    Skip for DLC and systemDefined depots: DLC licensed via own package (check 4), systemDefined always granted.
             if (depot.dlcAppId == INVALID_APP_ID && !depot.systemDefined && licensedDepotIds != null && depot.depotId !in licensedDepotIds)
@@ -832,9 +836,24 @@ class SteamService : Service(), IChallengeUrlChanged {
             preferredLanguage: String,
             ownedDlc: Map<Int, DepotInfo>?,
             licensedDepotIds: Set<Int>?,
-        ): Collection<DepotInfo> = depots.values.filter { depot ->
-            filterForDownloadableDepots(depot, prefer64Bit = false, preferNonDeckWindows = false, preferredLanguage, ownedDlc, licensedDepotIds)
+        ): Collection<DepotInfo> {
+            val dlcGroupsWithPreferredLanguage = dlcGroupsWithPreferredLanguageFor(depots, preferredLanguage)
+            return depots.values.filter { depot ->
+                filterForDownloadableDepots(
+                    depot, prefer64Bit = false, preferNonDeckWindows = false, preferredLanguage,
+                    ownedDlc, licensedDepotIds,
+                    dlcGroupsWithPreferredLanguage = dlcGroupsWithPreferredLanguage,
+                )
+            }
         }
+
+        /** Set of dlcAppIds (incl. INVALID_APP_ID for base) that have a depot in [preferredLanguage]. */
+        private fun dlcGroupsWithPreferredLanguageFor(
+            depots: Map<Int, DepotInfo>,
+            preferredLanguage: String,
+        ): Set<Int> = depots.values
+            .filter { it.language == preferredLanguage }
+            .mapTo(mutableSetOf()) { it.dlcAppId }
 
         /**
          * Two-pass depot resolution: derives preference flags from [eligibleDepots],
@@ -847,11 +866,15 @@ class SteamService : Service(), IChallengeUrlChanged {
             licensedDepotIds: Set<Int>?,
             hasSteamUnlockedBranch: Boolean = false,
         ): Map<Int, DepotInfo> {
+            val dlcGroupsWithPreferredLanguage = dlcGroupsWithPreferredLanguageFor(depots, preferredLanguage)
             val eligible = eligibleDepots(depots, preferredLanguage, ownedDlc, licensedDepotIds)
             val has64Bit = eligible.any { it.osArch == OSArch.Arch64 }
             val hasNonDeckWin = eligible.any { !it.steamDeck && it.isWindowsCompatible }
             return depots.filter { (_, depot) ->
-                filterForDownloadableDepots(depot, has64Bit, hasNonDeckWin, preferredLanguage, ownedDlc, licensedDepotIds)
+                filterForDownloadableDepots(
+                    depot, has64Bit, hasNonDeckWin, preferredLanguage, ownedDlc, licensedDepotIds,
+                    dlcGroupsWithPreferredLanguage = dlcGroupsWithPreferredLanguage,
+                )
             }
         }
 
@@ -862,13 +885,18 @@ class SteamService : Service(), IChallengeUrlChanged {
             val licensedDepots = getLicensedDepotIds(appId).orEmpty().toMutableSet()
 
             // Use the dlcAppID of the ownedDlc, to find the licensed depotIds from steam_license
+            val mainPackageDepotIds = getPkgInfoOf(appId)?.depotIds.orEmpty().toSet()
             val mapDlcDepotIds = mutableMapOf<Int, List<Int>>()
             ownedDlc.forEach { (dlcAppId, info) ->
                 val dlcDepotIds = getPkgInfoOf(dlcAppId)?.depotIds.orEmpty()
-                mapDlcDepotIds[dlcAppId] = dlcDepotIds
 
                 // Make sure licensedDepots contains the dlc depots
                 licensedDepots.addAll(dlcDepotIds)
+
+                val dlcOnlyDepotIds = dlcDepotIds.filter { it !in mainPackageDepotIds }
+                if (dlcOnlyDepotIds.isNotEmpty()) {
+                    mapDlcDepotIds[dlcAppId] = dlcOnlyDepotIds
+                }
             }
 
             val baseDepots = resolveDownloadableDepots(appInfo.depots, containerLanguage, ownedDlc, licensedDepots, hasSteamUnlockedBranch)
@@ -918,10 +946,11 @@ class SteamService : Service(), IChallengeUrlChanged {
                 val dlcLicensedDepots = getLicensedDepotIds(dlcApp.id)
                 val dlcEligible = eligibleDepots(dlcApp.depots, preferredLanguage, null, dlcLicensedDepots)
                 val dlcHasNonDeckWin = dlcEligible.any { !it.steamDeck && it.isWindowsCompatible }
+                val dlcGroupsWithPreferredLanguage = dlcGroupsWithPreferredLanguageFor(dlcApp.depots, preferredLanguage)
                 dlcApp.depots
                     .filter { (_, depot) ->
                         filterForDownloadableDepots(depot, has64Bit, dlcHasNonDeckWin, preferredLanguage, null, dlcLicensedDepots,
-                            hasSteamUnlockedBranch)
+                            hasSteamUnlockedBranch, dlcGroupsWithPreferredLanguage)
                     }
                     .forEach { (depotId, depot) ->
                         // Add DLC Depots with custom object
@@ -3475,7 +3504,7 @@ class SteamService : Service(), IChallengeUrlChanged {
 
         var isAutoLoggingIn = false
 
-        if (PrefManager.username.isNotEmpty() && PrefManager.refreshToken.isNotEmpty()) {
+        if (SteamUtils.hasStoredCredentials()) {
             isAutoLoggingIn = true
 
             login(
@@ -4027,17 +4056,28 @@ class SteamService : Service(), IChallengeUrlChanged {
                             // last-write-wins assignment within this batch and (b) refuse to downgrade an
                             // existing user-owned packageId across batches.
                             val accountId = userSteamId?.accountID?.toInt()
-                            val userOwnedPackageIds: Set<Int> = if (accountId != null) {
+                            val packageLicenses: Map<Int, SteamLicense> = if (accountId != null) {
                                 val packageIds = picsCallback.packages.values.map { it.id }
-                                licenseDao.findLicenses(packageIds)
+                                licenseDao.findLicenses(packageIds).associateBy { it.packageId }
+                            } else {
+                                emptyMap()
+                            }
+                            val userOwnedPackageIds: Set<Int> = if (accountId != null) {
+                                packageLicenses.values
                                     .filter { it.ownerAccountId.contains(accountId) }
                                     .mapTo(HashSet()) { it.packageId }
                             } else {
                                 emptySet()
                             }
 
-                            val orderedPackages = picsCallback.packages.values
-                                .sortedBy { pkg -> if (pkg.id in userOwnedPackageIds) 1 else 0 }
+                            // Prefer non-expired user-owned packages so a live sub wins over an expired remnant.
+                            fun pkgRank(pkgId: Int): Int {
+                                if (pkgId !in userOwnedPackageIds) return 0
+                                val expired = packageLicenses[pkgId]?.licenseFlags?.contains(ELicenseFlags.Expired) == true
+                                return if (expired) 1 else 2
+                            }
+
+                            val orderedPackages = picsCallback.packages.values.sortedBy { pkgRank(it.id) }
 
                             orderedPackages.forEach { pkg ->
                                 val appIds = pkg.keyValues["appids"].children.map { it.asInteger() }
@@ -4057,10 +4097,15 @@ class SteamService : Service(), IChallengeUrlChanged {
                                         return@forEach
                                     }
                                     if (accountId != null && existing.packageId != INVALID_PKG_ID) {
-                                        val existingIsUserOwned = licenseDao.findLicense(existing.packageId)
-                                            ?.ownerAccountId?.contains(accountId) == true
-                                        val newIsUserOwned = pkg.id in userOwnedPackageIds
-                                        if (existingIsUserOwned && !newIsUserOwned) {
+                                        val existingLicense = packageLicenses[existing.packageId]
+                                            ?: licenseDao.findLicense(existing.packageId)
+                                        val existingRank = when {
+                                            existingLicense == null -> 0
+                                            !existingLicense.ownerAccountId.contains(accountId) -> 0
+                                            ELicenseFlags.Expired in existingLicense.licenseFlags -> 1
+                                            else -> 2
+                                        }
+                                        if (existingRank > pkgRank(pkg.id)) {
                                             return@forEach
                                         }
                                     }
