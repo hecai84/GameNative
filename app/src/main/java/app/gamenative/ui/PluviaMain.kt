@@ -1846,7 +1846,7 @@ fun preLaunchApp(
 
             // Delete Ownership Token if exists
             Timber.tag("Epic").i("[Ownership Tokens] Cleaning up launch tokens for Epic games...")
-            EpicService.cleanupLaunchTokens(context)
+            EpicService.cleanupLaunchTokens(context, container)
 
             setLoadingDialogVisible(false)
             onSuccess(context, appId)
