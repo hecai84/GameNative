@@ -501,7 +501,6 @@ class LibraryViewModel @Inject constructor(
                 emptyList()
             }
             val customEntries = customGameItems
-                .filter { passesCompatibleFilter(it.name) }
                 .filter { !steamEntriesAppIds.contains(it.appId) } // Filter out imported steam appId
                 .map { LibraryEntry(it, true) }
 
