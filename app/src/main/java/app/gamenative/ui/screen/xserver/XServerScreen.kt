@@ -102,6 +102,7 @@ import app.gamenative.ui.data.PerformanceHudConfig
 import app.gamenative.ui.data.PerformanceHudSize
 import app.gamenative.ui.data.XServerState
 import app.gamenative.ui.widget.PerformanceHudView
+import app.gamenative.utils.AssetUtils
 import app.gamenative.utils.ContainerUtils
 import app.gamenative.utils.CustomGameScanner
 import app.gamenative.utils.ExecutableSelectionUtils
@@ -913,6 +914,7 @@ fun XServerScreen(
         }
         val isGamepad = ExternalController.isGameController(device)
         if (isGamepad) {
+            xServerView!!.getxServer().winHandler.setCurrentController(device.id);
             if (!showElementEditor && !keepPausedForEditor && !showQuickMenu && !isEditMode &&
                 !container.isTouchscreenMode &&
                 !hasUpdatedScreenGamepad) {
@@ -1333,6 +1335,7 @@ fun XServerScreen(
             } else {
                 var handled = false
                 if (isGamepad) {
+                    xServerView!!.getxServer().winHandler.setCurrentController(it.event.device.id);
                     handled = physicalControllerHandler?.onKeyEvent(it.event) == true
                     if (!handled) handled = PluviaApp.inputControlsView?.onKeyEvent(it.event) == true
                     // Final fallback to WinHandler passthrough
@@ -1367,6 +1370,7 @@ fun XServerScreen(
             } else {
                 var handled = false
                 if (isGamepad && it.event != null) {
+                    xServerView!!.getxServer().winHandler.setCurrentController(it.event.device.id);
                     handled = physicalControllerHandler?.onGenericMotionEvent(it.event!!) == true
                     if (!handled) handled = PluviaApp.inputControlsView?.onGenericMotionEvent(it.event) == true
                     // Final fallback to WinHandler passthrough
@@ -1644,7 +1648,11 @@ fun XServerScreen(
                     ?.getComponent<XServerComponent>(XServerComponent::class.java)
                     ?.xServer
             val xServerToUse = existingXServer ?: XServer(ScreenInfo(xServerState.value.screenSize), usrGlibc)
-            val useGLRenderer = container.graphicsDriver == "virgl"
+            // VirGL containers always need GL (shared EGL context for the
+            // VirGL passthrough). Default to the legacy GL renderer for all
+            // other containers as well. Uncheck the per-container useLegacyRenderer
+            // setting to switch to the Vulkan renderer.
+            val useGLRenderer = container.graphicsDriver == "virgl" || container.isUseLegacyRenderer
             val xServerViewInstance: XServerRendererView = if (useGLRenderer) {
                 XServerViewGL(context, xServerToUse)
             } else {
@@ -2434,6 +2442,7 @@ fun XServerScreen(
             onDismiss = dismissOverlayMenu,
             onItemSelected = onQuickMenuItemSelected,
             renderer = xServerView?.renderer as? VulkanRenderer,
+            glRenderer = xServerView?.renderer as? GLRenderer,
             container = container,
             wineProcesses = quickMenuWineProcesses,
             isWineProcessesLoading = quickMenuWineProcessesLoading,
@@ -4432,7 +4441,15 @@ private fun applyGeneralPatches(
 }
 
 private fun refreshComponentsFiles(context: Context) {
-    TarCompressorUtils.extract(TarCompressorUtils.Type.ZSTD, context.assets, "pulseaudio-gamenative.tzst", File(context.filesDir, "pulseaudio"))
+    val extractionPairs = listOf(
+        "pulseaudio-gamenative-20260528.tzst" to File(context.filesDir, "pulseaudio")
+    )
+
+    AssetUtils.extractComponentsWithVersionCheck(
+        extractionPairs,
+        context.assets,
+        TarCompressorUtils.Type.ZSTD
+    )
 }
 
 private fun extractDXWrapperFiles(

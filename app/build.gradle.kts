@@ -33,7 +33,7 @@ android {
     compileSdk = 36
 
     // https://developer.android.com/ndk/downloads
-    ndkVersion = "22.1.7171670"
+    ndkVersion = "27.3.13750724"
 
 
     lint {
@@ -96,6 +96,7 @@ android {
             "pl",      // Polish
             "ru",      // Russian
             "ko",      // Korean
+            "ja",      // Japanese
             // TODO: Add more languages here using the ISO 639-1 locale code with regional qualifiers (e.g., "pt-rPT" for European Portuguese)
         )
 
@@ -199,6 +200,12 @@ android {
     kotlinter {
         ignoreFormatFailures  = false
     }
+
+    // externalNativeBuild {
+    //    cmake {
+    //        path = file("src/main/cpp/evshim/CMakeLists.txt")
+    //    }
+    // }
 
     // xconnectorpatch is shipped as a prebuilt jniLib because our APK packaging flow
     // does not rebuild native libraries during release creation.
