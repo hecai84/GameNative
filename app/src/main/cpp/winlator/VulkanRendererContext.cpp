@@ -773,6 +773,8 @@ void VulkanRendererContext::recordCmdBuf(VkCommandBuffer cb, uint32_t imgIdx,
         pc.brightness = activeBrightness;
         pc.contrast = activeContrast;
         pc.gamma = activeGamma;
+        pc.outW = std::max(1.0f, (float)d.w * sx / cw * (float)swapchainExt.width);
+        pc.outH = std::max(1.0f, (float)d.h * sy / ch * (float)swapchainExt.height);
         vk_.CmdPushConstants(cb, pipeLayout, VK_SHADER_STAGE_VERTEX_BIT|VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(pc), &pc);
         vk_.CmdDraw(cb, 4, 1, 0, 0);
     }
@@ -793,6 +795,8 @@ void VulkanRendererContext::recordCmdBuf(VkCommandBuffer cb, uint32_t imgIdx,
         cpc.brightness = 0.0f;
         cpc.contrast = 0.0f;
         cpc.gamma = 1.0f;
+        cpc.outW = (float)std::max(1, (int)curW);
+        cpc.outH = (float)std::max(1, (int)curH);
         vk_.CmdPushConstants(cb, pipeLayout, VK_SHADER_STAGE_VERTEX_BIT|VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(cpc), &cpc);
         vk_.CmdDraw(cb, 4, 1, 0, 0);
     }
@@ -1041,7 +1045,7 @@ void VulkanRendererContext::setTransform(float ox, float oy, float sx, float sy)
 
 void VulkanRendererContext::updatePointerPosition(short x, short y) {
     pointerX.store(x); pointerY.store(y);
-    if (cursorVisible.load()) { cursorMoved.store(true); dirtyCV.notify_one(); }
+    cursorMoved.store(true); dirtyCV.notify_one();
 }
 
 void VulkanRendererContext::setCursorVisible(bool v) {
