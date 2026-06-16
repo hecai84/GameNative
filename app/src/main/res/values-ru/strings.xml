@@ -1046,6 +1046,8 @@ https://gamenative.app
     <string name="settings_interface_show_gamepad_hints_title">Показывать подсказки геймпада</string>
     <string name="settings_interface_show_gamepad_hints_subtitle">Показывает панель подсказок кнопок геймпада в нижней части экрана</string>
     <string name="settings_interface_icon_style">Стиль значка</string>
+    <string name="settings_interface_custom_games">Пользовательские игры</string>
+    <string name="settings_interface_custom_game_import_as_steam">Импортировать пользовательские игры как игры Steam</string>
     <string name="settings_interface_no_external_storage">Внешнее хранилище не обнаружено</string>
     <string name="settings_interface_restart_required_title">Требуется перезагрузка</string>
     <string name="settings_interface_storage_volume_title">Том хранилища</string>
@@ -1383,6 +1385,13 @@ https://gamenative.app
      <string name="steam_save_import_failed">Не удалось импортировать сохранения: %s</string>
     <string name="option_import_saves">Импортировать сохранения</string>
     <string name="option_export_saves">Экспортировать сохранения</string>
+    <!-- HLTB (How Long To Beat) -->
+    <string name="hltb_main_story">Основной сюжет</string>
+    <string name="hltb_main_plus_extras">Основное + Дополнения</string>
+    <string name="hltb_completionist">Перфекционист</string>
+    <string name="hltb_all_styles">Все стили</string>
+    <string name="hltb_hours_value">%sh</string>
+    <string name="hltb_section_title">HLTB</string>
 
     <!-- LSFG-VK frame generation -->
     <string name="lsfg_tab_title">LSFG-VK</string>
@@ -1463,4 +1472,17 @@ https://gamenative.app
     <string name="screen_effects_scaling_mode_dls_desc">Повышение резкости / чёткости.</string>
     <string name="screen_effects_scaling_mode_natural">Естественный</string>
     <string name="screen_effects_scaling_mode_natural_desc">Более тёплый оттенок.</string>
+    <string name="stats_key_runs">Успешные запуски на вашем GPU</string>
+    <string name="stats_key_reviews">5-звёздочные отзывы (ваш GPU / ваше устройство)</string>
+    <string name="stats_key_fps">Ожидаемый FPS</string>
+    <string name="stats_key_session">Самая длинная сессия на вашем устройстве</string>
+    <string name="sort_fps">Ожидаемый FPS</string>
+    <string name="sort_runs">Успешные запуски</string>
+    <string name="sort_reviews">5-звёздочные отзывы (устройство)</string>
+    <string name="sort_reviews_gpu">5-звёздочные отзывы (GPU)</string>
+    <string name="filter_expired">Истекшие</string>
+    <string name="filter_playable">Играбельно (30+ FPS)</string>
+    <string name="filter_five_star_device">5-звёздочные отзывы на устройстве</string>
+    <string name="filter_five_star_gpu">5-звёздочные отзывы на GPU</string>
+    <string name="filter_proven_gpu">Проверено на вашем GPU</string>
 </resources>

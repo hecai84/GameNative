@@ -958,6 +958,8 @@
     <string name="settings_interface_show_gamepad_hints_title">Mostra suggerimenti del controller</string>
     <string name="settings_interface_show_gamepad_hints_subtitle">Mostra la barra dei suggerimenti dei pulsanti del controller nella parte inferiore dello schermo</string>
     <string name="settings_interface_icon_style">Stile icona</string>
+    <string name="settings_interface_custom_games">Giochi personalizzati</string>
+    <string name="settings_interface_custom_game_import_as_steam">Importa giochi personalizzati come giochi Steam</string>
     <string name="settings_interface_wifi_only_title">Scarica solo tramite Wi-Fi/LAN</string>
     <string name="settings_interface_wifi_only_subtitle">Impedisci download su rete cellulare</string>
     <string name="settings_interface_external_storage_title">Scrivi su memoria esterna</string>
@@ -1446,6 +1448,13 @@
      <string name="steam_save_import_failed">Importazione salvataggi fallita: %s</string>
     <string name="option_import_saves">Importa salvataggi</string>
     <string name="option_export_saves">Esporta salvataggi</string>
+    <!-- HLTB (How Long To Beat) -->
+    <string name="hltb_main_story">Storia principale</string>
+    <string name="hltb_main_plus_extras">Principale + Extra</string>
+    <string name="hltb_completionist">Completista</string>
+    <string name="hltb_all_styles">Tutti gli stili</string>
+    <string name="hltb_hours_value">%sh</string>
+    <string name="hltb_section_title">HLTB</string>
 
     <!-- LSFG-VK frame generation -->
     <string name="lsfg_tab_title">LSFG-VK</string>
@@ -1526,4 +1535,17 @@
     <string name="screen_effects_scaling_mode_dls_desc">Passaggio di nitidezza / chiarezza.</string>
     <string name="screen_effects_scaling_mode_natural">Naturale</string>
     <string name="screen_effects_scaling_mode_natural_desc">Tonalità più calda.</string>
+    <string name="stats_key_runs">Esecuzioni riuscite sulla tua GPU</string>
+    <string name="stats_key_reviews">Recensioni a 5 stelle (la tua GPU / il tuo dispositivo)</string>
+    <string name="stats_key_fps">FPS previsti</string>
+    <string name="stats_key_session">Sessione più lunga sul tuo dispositivo</string>
+    <string name="sort_fps">FPS previsti</string>
+    <string name="sort_runs">Esecuzioni riuscite</string>
+    <string name="sort_reviews">Recensioni a 5 stelle (dispositivo)</string>
+    <string name="sort_reviews_gpu">Recensioni a 5 stelle (GPU)</string>
+    <string name="filter_expired">Scaduto</string>
+    <string name="filter_playable">Giocabile (30+ FPS)</string>
+    <string name="filter_five_star_device">Recensioni a 5 stelle sul dispositivo</string>
+    <string name="filter_five_star_gpu">Recensioni a 5 stelle sulla GPU</string>
+    <string name="filter_proven_gpu">Collaudato sulla tua GPU</string>
 </resources>
