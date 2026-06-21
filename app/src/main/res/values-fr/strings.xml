@@ -279,6 +279,7 @@
     <string name="open_navigation_menu">Ouvrir le menu de navigation</string>
     <string name="quick_menu_title">Menu rapide</string>
     <string name="quick_menu_back">Retour</string>
+    <string name="display_brightness">Luminosité de l’écran</string>
     <string name="screen_effects">Effets d’écran</string>
     <string name="screen_effects_live_preview">Les modifications s’appliquent instantanément au jeu en cours.</string>
     <string name="screen_effects_color_adjustments">Réglages des couleurs</string>
@@ -749,8 +750,11 @@
     <string name="gesture_action_right_click">Clic droit</string>
     <string name="gesture_action_middle_click">Clic central</string>
     <string name="gesture_pan_middle_mouse">Pan souris centrale</string>
+    <string name="gesture_pan_inverted_middle_mouse">Pan souris centrale inversé</string>
     <string name="gesture_pan_wasd">WASD</string>
+    <string name="gesture_pan_inverted_wasd">WASD inversé</string>
     <string name="gesture_pan_arrow_keys">Touches fléchées</string>
+    <string name="gesture_pan_inverted_arrow_keys">Touches fléchées inversées</string>
     <string name="gesture_zoom_scroll_wheel">Molette de défilement</string>
     <string name="gesture_zoom_plus_minus">Touches +/-</string>
     <string name="gesture_zoom_page_up_down">Page haut/bas</string>
@@ -769,9 +773,13 @@
     <string name="gesture_header_special">Spécial</string>
     <string name="gesture_header_mouse">Souris</string>
     <string name="gesture_header_common_game">Touches de jeu courantes</string>
+    <string name="gesture_header_navigation_editing">Navigation / édition</string>
+    <string name="gesture_header_symbols">Symboles</string>
     <string name="gesture_header_letters">Lettres A-Z</string>
     <string name="gesture_header_numbers">Nombres 0-9</string>
+    <string name="gesture_header_numpad">Pavé numérique</string>
     <string name="gesture_header_function_keys">Touches de fonction</string>
+    <string name="gesture_header_modifiers_locks">Modificateurs / verrouillage</string>
     <string name="gesture_two_finger_hold">Maintien à deux doigts</string>
     <string name="gesture_two_finger_hold_delay">Délai du maintien à deux doigts (ms)</string>
     <string name="gesture_three_finger_tap">Appui à trois doigts</string>
@@ -1001,6 +1009,7 @@
     <!-- Generic/Reusable strings -->
     <string name="continue_action">Continuer</string>
     <string name="settings_text">Paramètres</string>
+    <string name="settings_interface_settingslistdropdownsearchable_searchlabel">Rechercher</string>
 
 
     <!-- Connecting to Servers Screen -->

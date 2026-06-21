@@ -294,6 +294,7 @@
     <string name="open_navigation_menu">Abrir menú de navegación</string>
     <string name="quick_menu_title">Menú rápido</string>
     <string name="quick_menu_back">Atrás</string>
+    <string name="display_brightness">Brillo de pantalla</string>
     <string name="screen_effects">Efectos de pantalla</string>
     <string name="screen_effects_live_preview">Los cambios se aplican al instante al juego actual.</string>
     <string name="screen_effects_color_adjustments">Ajustes de color</string>
@@ -798,8 +799,11 @@
     <string name="gesture_action_right_click">Clic derecho</string>
     <string name="gesture_action_middle_click">Clic central</string>
     <string name="gesture_pan_middle_mouse">Pan ratón central</string>
+    <string name="gesture_pan_inverted_middle_mouse">Pan invertido con botón central</string>
     <string name="gesture_pan_wasd">WASD</string>
+    <string name="gesture_pan_inverted_wasd">WASD invertido</string>
     <string name="gesture_pan_arrow_keys">Teclas de flecha</string>
+    <string name="gesture_pan_inverted_arrow_keys">Teclas de flecha invertidas</string>
     <string name="gesture_zoom_scroll_wheel">Rueda de desplazamiento</string>
     <string name="gesture_zoom_plus_minus">Teclas +/-</string>
     <string name="gesture_zoom_page_up_down">Re Pág / Av Pág</string>
@@ -818,9 +822,13 @@
     <string name="gesture_header_special">Especial</string>
     <string name="gesture_header_mouse">Ratón</string>
     <string name="gesture_header_common_game">Teclas comunes de juego</string>
+    <string name="gesture_header_navigation_editing">Navegación / edición</string>
+    <string name="gesture_header_symbols">Símbolos</string>
     <string name="gesture_header_letters">Letras A-Z</string>
     <string name="gesture_header_numbers">Números 0-9</string>
+    <string name="gesture_header_numpad">Teclado numérico</string>
     <string name="gesture_header_function_keys">Teclas de función</string>
+    <string name="gesture_header_modifiers_locks">Modificadores / bloqueo</string>
     <string name="gesture_two_finger_hold">Mantener con dos dedos</string>
     <string name="gesture_two_finger_hold_delay">Retardo de mantener con dos dedos (ms)</string>
     <string name="gesture_three_finger_tap">Toque con tres dedos</string>
@@ -1015,7 +1023,7 @@
     <!-- Generic/Reusable strings -->
     <string name="continue_action">Continuar</string>
     <string name="settings_text">Ajustes</string>
-
+    <string name="settings_interface_settingslistdropdownsearchable_searchlabel">buscar</string>
 
     <!-- Connecting to Servers Screen -->
     <string name="connect_to_remote_server">Conectando con los servidores remotos…</string>

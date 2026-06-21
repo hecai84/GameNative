@@ -240,6 +240,7 @@
     <string name="open_navigation_menu">ナビゲーションメニューを開く</string>
     <string name="quick_menu_title">クイックメニュー</string>
     <string name="quick_menu_back">戻る</string>
+    <string name="display_brightness">ディスプレイの明るさ</string>
     <string name="screen_effects">画面効果</string>
     <string name="screen_effects_live_preview">変更は現在のゲームに即座に適用されます。</string>
     <string name="screen_effects_scaling">スケーリング</string>
@@ -773,8 +774,11 @@
     <string name="gesture_action_right_click">右クリック</string>
     <string name="gesture_action_middle_click">中クリック</string>
     <string name="gesture_pan_middle_mouse">中マウスパン</string>
+    <string name="gesture_pan_inverted_middle_mouse">反転中マウスパン</string>
     <string name="gesture_pan_wasd">WASD</string>
+    <string name="gesture_pan_inverted_wasd">反転WASD</string>
     <string name="gesture_pan_arrow_keys">矢印キー</string>
+    <string name="gesture_pan_inverted_arrow_keys">反転矢印キー</string>
     <string name="gesture_pan_left_click_drag">左クリックでドラッグ</string>
     <string name="gesture_pan_right_click_drag">右クリックしてドラッグ</string>
     <string name="gesture_zoom_scroll_wheel">スクロールホイール</string>
@@ -788,9 +792,13 @@
     <string name="gesture_header_special">特別</string>
     <string name="gesture_header_mouse">ねずみ</string>
     <string name="gesture_header_common_game">共通のゲームキー</string>
+    <string name="gesture_header_navigation_editing">ナビゲーション / 編集</string>
+    <string name="gesture_header_symbols">記号</string>
     <string name="gesture_header_letters">文字A\u2013Z</string>
     <string name="gesture_header_numbers">数字0\u20139</string>
+    <string name="gesture_header_numpad">テンキー</string>
     <string name="gesture_header_function_keys">ファンクションキー</string>
+    <string name="gesture_header_modifiers_locks">修飾キー / ロック</string>
     <string name="gesture_delay_label">遅れ</string>
     <string name="gesture_two_finger_hold">2本指ホールド</string>
     <string name="gesture_two_finger_hold_delay">2 本指ホールド遅延 (ミリ秒)</string>
@@ -1041,6 +1049,7 @@
     <!-- Generic/Reusable strings -->
     <string name="continue_action">続く</string>
     <string name="settings_text">設定</string>
+    <string name="settings_interface_settingslistdropdownsearchable_searchlabel">検索</string>
 
 
     <!-- Connecting to Servers Screen -->

@@ -292,6 +292,7 @@
     <string name="open_navigation_menu">탐색 메뉴 열기</string>
     <string name="quick_menu_title">빠른 메뉴</string>
     <string name="quick_menu_back">뒤로</string>
+    <string name="display_brightness">디스플레이 밝기</string>
     <string name="screen_effects">화면 효과</string>
     <string name="screen_effects_live_preview">변경 사항이 현재 게임에 즉시 적용됩니다.</string>
     <string name="screen_effects_color_adjustments">색상 조정</string>
@@ -761,8 +762,11 @@
     <string name="gesture_action_right_click">오른쪽 클릭</string>
     <string name="gesture_action_middle_click">가운데 클릭</string>
     <string name="gesture_pan_middle_mouse">가운데 버튼 패닝</string>
+    <string name="gesture_pan_inverted_middle_mouse">반전 가운데 버튼 패닝</string>
     <string name="gesture_pan_wasd">WASD</string>
+    <string name="gesture_pan_inverted_wasd">반전 WASD</string>
     <string name="gesture_pan_arrow_keys">화살표 키</string>
+    <string name="gesture_pan_inverted_arrow_keys">반전 화살표 키</string>
     <string name="gesture_zoom_scroll_wheel">스크롤 휠</string>
     <string name="gesture_zoom_plus_minus">+/- 키</string>
     <string name="gesture_zoom_page_up_down">페이지 위/아래</string>
@@ -781,9 +785,13 @@
     <string name="gesture_header_special">특수</string>
     <string name="gesture_header_mouse">마우스</string>
     <string name="gesture_header_common_game">일반 게임 키</string>
+    <string name="gesture_header_navigation_editing">탐색 / 편집</string>
+    <string name="gesture_header_symbols">기호</string>
     <string name="gesture_header_letters">문자 A-Z</string>
     <string name="gesture_header_numbers">숫자 0-9</string>
+    <string name="gesture_header_numpad">숫자 키패드</string>
     <string name="gesture_header_function_keys">기능 키</string>
+    <string name="gesture_header_modifiers_locks">보조키 / 잠금</string>
     <string name="gesture_two_finger_hold">두 손가락 길게 누르기</string>
     <string name="gesture_two_finger_hold_delay">두 손가락 길게 누르기 지연 (ms)</string>
     <string name="gesture_three_finger_tap">세 손가락 탭</string>
@@ -1547,6 +1555,7 @@
     <string name="screen_effects_scaling_mode_dls_desc">샤픈/선명도 패스.</string>
     <string name="screen_effects_scaling_mode_natural">자연</string>
     <string name="screen_effects_scaling_mode_natural_desc">더 따뜻한 색조.</string>
+    <string name="settings_interface_settingslistdropdownsearchable_searchlabel">찾다</string>
     <string name="screen_effects_fsr">FSR 1.0</string>
     <string name="screen_effects_fsr_description">공식 AMD FidelityFX Super Resolution 1.0입니다. EASU + RCAS를 사용해 낮은 내부 해상도로 렌더링한 뒤 전체 해상도로 업스케일합니다.</string>
     <string name="screen_effects_fsr_quality">FSR 품질</string>
